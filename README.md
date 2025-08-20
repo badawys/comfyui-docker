@@ -16,11 +16,11 @@
 * Ubuntu 22.04 LTS
 * CUDA 12.8 / 12.4 (12.8 is default)
 * Python 3.12.9 / 3.11.12 (3.12.9 is default)
-* Torch 2.7.0 / 2.6.0 (2.7.0 is default)
-* xformers 0.0.30 / 0.0.29.post3 (0.0.30 is default)
+* Torch 2.8.0 / 2.6.0 (2.8.0 is default)
+* xformers 0.0.32.post1 / 0.0.29.post3 (0.0.32.post1 is default)
 * [Jupyter Lab](https://github.com/jupyterlab/jupyterlab)
 * [code-server](https://github.com/coder/code-server)
-* [ComfyUI](https://github.com/comfyanonymous/ComfyUI) v0.3.50
+* [ComfyUI](https://github.com/comfyanonymous/ComfyUI) v0.3.51
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
 * [RunPod File Uploader](https://github.com/kodxana/RunPod-FilleUploader)

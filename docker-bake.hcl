@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "v0.3.50"
+    default = "v0.3.51"
 }
 
 variable "BASE_IMAGE_REPOSITORY" {
@@ -69,7 +69,7 @@ target "cu124-py312" {
 
 target "cu128-py311" {
     dockerfile = "Dockerfile"
-    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:cu128-py311-${RELEASE}.post1"]
+    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:cu128-py311-${RELEASE}"]
     args = {
         RELEASE                    = "${RELEASE}"
         BASE_IMAGE                 = "${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_VERSION}-python3.11-cuda12.8.1-torch2.7.1"
@@ -85,7 +85,7 @@ target "cu128-py311" {
 
 target "cu128-py312" {
     dockerfile = "Dockerfile"
-    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:cu128-py312-${RELEASE}.post1"]
+    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:cu128-py312-${RELEASE}"]
     args = {
         RELEASE                    = "${RELEASE}"
         BASE_IMAGE                 = "${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_VERSION}-python3.12-cuda12.8.1-torch2.7.1"
