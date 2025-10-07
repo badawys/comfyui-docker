@@ -23,7 +23,10 @@ ARG CIVITAI_DOWNLOADER_VERSION
 RUN /install_civitai_model_downloader.sh
 
 # Download Qwen models
-RUN /download_qwen_models.sh
+RUN /download_qwen_models.sh && \
+    # Clean up package manager caches to save space
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Cleanup installation scripts
 RUN rm -f /install_*.sh /download_*.sh

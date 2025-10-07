@@ -23,9 +23,15 @@ download_file() {
     echo "  From: ${url}"
     echo "  To: ${output_path}"
     
+    # Show disk space before download
+    echo "  Disk space available:"
+    df -h / | tail -1
+    
     while [ $retry_count -lt $max_retries ]; do
-        if wget --progress=bar:force:noscroll -c "${url}" -O "${output_path}"; then
+        if wget --progress=dot:giga -c "${url}" -O "${output_path}"; then
             echo "  ✓ Download successful"
+            # Show file size
+            ls -lh "${output_path}"
             return 0
         else
             retry_count=$((retry_count + 1))
