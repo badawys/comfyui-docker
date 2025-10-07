@@ -20,9 +20,6 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target: [cu124-py311, cu124-py312, cu128-py311, cu128-py312]
     
     steps:
       - name: Checkout repository
@@ -53,11 +50,11 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker buildx bake -f docker-bake.hcl ${{ matrix.target }} --push
+          docker buildx bake -f docker-bake.hcl cu124-py312 --push
         env:
           REGISTRY: ${{ env.REGISTRY }}
           REGISTRY_USER: ${{ env.REGISTRY_USER }}
           RELEASE: ${{ steps.meta.outputs.release }}
 
       - name: Image digest
-        run: echo "Image pushed successfully for target ${{ matrix.target }}"
+        run: echo "Image pushed successfully for cu124-py312"
