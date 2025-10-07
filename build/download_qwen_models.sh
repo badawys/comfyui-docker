@@ -3,8 +3,17 @@ set -e
 
 echo "Downloading Qwen models for ComfyUI..."
 
-# Define the ComfyUI models directory
-MODELS_DIR="/ComfyUI/models"
+# Define the ComfyUI models directory (use workspace if available, fallback to /ComfyUI)
+MODELS_DIR="${1:-/workspace/ComfyUI/models}"
+
+# Create a marker file to track if models have been downloaded
+MARKER_FILE="${MODELS_DIR}/.qwen_models_downloaded"
+
+# Check if models are already downloaded
+if [ -f "${MARKER_FILE}" ]; then
+    echo "Qwen models already downloaded. Skipping..."
+    exit 0
+fi
 
 # Create necessary subdirectories
 mkdir -p "${MODELS_DIR}/vae"
@@ -80,3 +89,8 @@ echo "  VAE: ${MODELS_DIR}/vae/qwen_image_vae.safetensors"
 echo "  Text Encoder: ${MODELS_DIR}/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors"
 echo "  LoRA: ${MODELS_DIR}/loras/Qwen-Image-Lightning-4steps-V1.0.safetensors"
 echo "  Diffusion Model: ${MODELS_DIR}/diffusion_models/qwen_image_edit_2509_fp8_e4m3fn.safetensors"
+
+# Create marker file to indicate successful download
+touch "${MARKER_FILE}"
+echo ""
+echo "Created marker file: ${MARKER_FILE}"

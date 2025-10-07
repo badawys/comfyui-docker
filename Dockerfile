@@ -22,14 +22,8 @@ COPY --chmod=755 app-manager/*.sh /app-manager/scripts/
 ARG CIVITAI_DOWNLOADER_VERSION
 RUN /install_civitai_model_downloader.sh
 
-# Download Qwen models
-RUN /download_qwen_models.sh && \
-    # Clean up package manager caches to save space
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Cleanup installation scripts
-RUN rm -f /install_*.sh /download_*.sh
+RUN rm -f /install_*.sh
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
@@ -48,6 +42,7 @@ ENV VENV_PATH=${VENV_PATH}
 # Copy the scripts
 WORKDIR /
 COPY --chmod=755 scripts/* ./
+COPY --chmod=755 build/download_qwen_models.sh /download_qwen_models.sh
 
 # Start the container
 SHELL ["/bin/bash", "--login", "-c"]

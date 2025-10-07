@@ -139,6 +139,15 @@ else
     echo "SYNC: Existing version is newer than the template version, not syncing!"
 fi
 
+# Download Qwen models if not already present
+echo ""
+echo "MODELS: Checking for Qwen models..."
+if [ -f /download_qwen_models.sh ]; then
+    /download_qwen_models.sh /workspace/ComfyUI/models
+else
+    echo "MODELS: Download script not found, skipping model download"
+fi
+
 # Start application manager
 cd /app-manager
 npm start > /workspace/logs/app-manager.log 2>&1 &
