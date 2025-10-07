@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+set -e
+
+echo "Downloading Qwen models for ComfyUI..."
+
+# Define the ComfyUI models directory
+MODELS_DIR="/ComfyUI/models"
+
+# Create necessary subdirectories
+mkdir -p "${MODELS_DIR}/vae"
+mkdir -p "${MODELS_DIR}/text_encoders"
+mkdir -p "${MODELS_DIR}/loras"
+mkdir -p "${MODELS_DIR}/diffusion_models"
+
+# Function to download a file with retry logic
+download_file() {
+    local url="$1"
+    local output_path="$2"
+    local max_retries=3
+    local retry_count=0
+    
+    echo "Downloading: $(basename ${output_path})"
+    echo "  From: ${url}"
+    echo "  To: ${output_path}"
+    
+    while [ $retry_count -lt $max_retries ]; do
+        if wget --progress=bar:force:noscroll -c "${url}" -O "${output_path}"; then
+            echo "  ✓ Download successful"
+            return 0
+        else
+            retry_count=$((retry_count + 1))
+            echo "  ✗ Download failed. Retry ${retry_count}/${max_retries}..."
+            sleep 5
+        fi
+    done
+    
+    echo "  ✗ Failed to download after ${max_retries} attempts"
+    return 1
+}
+
+# Download VAE
+echo ""
+echo "=== Downloading VAE ==="
+download_file \
+    "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" \
+    "${MODELS_DIR}/vae/qwen_image_vae.safetensors"
+
+# Download Text Encoder
+echo ""
+echo "=== Downloading Text Encoder ==="
+download_file \
+    "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors" \
+    "${MODELS_DIR}/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors"
+
+# Download LoRA
+echo ""
+echo "=== Downloading LoRA ==="
+download_file \
+    "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-4steps-V1.0.safetensors" \
+    "${MODELS_DIR}/loras/Qwen-Image-Lightning-4steps-V1.0.safetensors"
+
+# Download Diffusion Model
+echo ""
+echo "=== Downloading Diffusion Model ==="
+download_file \
+    "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2509_fp8_e4m3fn.safetensors" \
+    "${MODELS_DIR}/diffusion_models/qwen_image_edit_2509_fp8_e4m3fn.safetensors"
+
+echo ""
+echo "=== All Qwen models downloaded successfully! ==="
+echo ""
+echo "Model locations:"
+echo "  VAE: ${MODELS_DIR}/vae/qwen_image_vae.safetensors"
+echo "  Text Encoder: ${MODELS_DIR}/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors"
+echo "  LoRA: ${MODELS_DIR}/loras/Qwen-Image-Lightning-4steps-V1.0.safetensors"
+echo "  Diffusion Model: ${MODELS_DIR}/diffusion_models/qwen_image_edit_2509_fp8_e4m3fn.safetensors"

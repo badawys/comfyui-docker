@@ -22,8 +22,11 @@ COPY --chmod=755 app-manager/*.sh /app-manager/scripts/
 ARG CIVITAI_DOWNLOADER_VERSION
 RUN /install_civitai_model_downloader.sh
 
+# Download Qwen models
+RUN /download_qwen_models.sh
+
 # Cleanup installation scripts
-RUN rm -f /install_*.sh
+RUN rm -f /install_*.sh /download_*.sh
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
