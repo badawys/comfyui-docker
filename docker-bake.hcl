@@ -3,7 +3,7 @@ variable "REGISTRY" {
 }
 
 variable "REGISTRY_USER" {
-    default = "ashleykza"
+    default = "badawys"
 }
 
 variable "APP" {
@@ -15,15 +15,15 @@ variable "RELEASE" {
 }
 
 variable "BASE_IMAGE_REPOSITORY" {
-    default = "ashleykza/runpod-base"
+    default = "badawys/runpod-qwen-image-edit-comfyui"
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "2.4.5"
+    default = "1.0.0"
 }
 
 group "default" {
-    targets = ["cu128-py312"]
+    targets = ["cu124-py312"]
 }
 
 group "all" {
