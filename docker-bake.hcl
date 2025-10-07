@@ -15,11 +15,11 @@ variable "RELEASE" {
 }
 
 variable "BASE_IMAGE_REPOSITORY" {
-    default = "badawys/runpod-qwen-image-edit-comfyui"
+    default = "ashleykza/runpod-base"
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "1.0.0"
+    default = "2.4.5"
 }
 
 group "default" {
