@@ -5,6 +5,12 @@ FROM ${BASE_IMAGE}
 WORKDIR /
 COPY --chmod=755 build/* ./
 
+# Install aria2c for fast parallel model downloads
+RUN apt-get update && \
+    apt-get install -y aria2 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install ComfyUI
 ARG TORCH_VERSION
 ARG XFORMERS_VERSION
